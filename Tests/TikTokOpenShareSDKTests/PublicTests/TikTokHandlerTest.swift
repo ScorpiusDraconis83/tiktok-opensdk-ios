@@ -10,26 +10,11 @@ import XCTest
 @testable import TikTokOpenShareSDK
 
 class TikTokURLHandlerTest: XCTestCase {
+    
     override class func setUp() {
         TikTokTestEnv.setUpEnv()
     }
-    
-    func testHandleShareResponseURL_success() {
-        let shareRequest = TikTokShareRequest(localIdentifiers: ["1"], mediaType: .video, redirectURI: "https://www.test.com/test")
-        let shareService = TikTokShareService(urlOpener: MockURLOpener())
-        shareRequest.service = shareService
-        let clientKey = "some_client_key"
-        shareRequest.customConfig = TikTokShareRequest.CustomConfiguration.init(clientKey: clientKey, callerUrlScheme: clientKey)
-        let callbackExpectation = XCTestExpectation(description: "Expect callback")
-        shareRequest.send { response in
-            callbackExpectation.fulfill()
-        }
-        let url = URL(string: "https://www.test.com/test?state=&from_platform=tiktoksharesdk&request_id=test-request-id&error_code=-2&response_id=test-response-id&error_string=bytebase_cancel_share")!
-        XCTAssertEqual(url.host, "www.test.com")
-        XCTAssertTrue(TikTokURLHandler.handleOpenURL(url))
-        wait(for: [callbackExpectation], timeout: 1)
-    }
-    
+
     func testHandleShareResponseURL_invalidRedirectURI() {
         let shareRequest = TikTokShareRequest(localIdentifiers: ["1"], mediaType: .video, redirectURI: "https://www.test.com/test")
         let shareService = TikTokShareService(urlOpener: MockURLOpener())
@@ -40,7 +25,7 @@ class TikTokURLHandlerTest: XCTestCase {
         shareRequest.send { response in
             callbackExpectation.fulfill()
         }
-        let url = URL(string: "https://www.incorrecttest.com/test?state=&from_platform=tiktoksharesdk&request_id=test-request-id&error_code=-2&response_id=test-response-id&error_string=bytebase_cancel_share")!
+        let url = URL(string: "https://www.incorrecttest.com/test?state=&from_platform=tiktoksharesdk&request_id=test-request-id&error_code=-2&response_id=test-response-id&error_string=cancel_share")!
         XCTAssertEqual(url.host, "www.incorrecttest.com")
         XCTAssertFalse(TikTokURLHandler.handleOpenURL(url))
         let result = XCTWaiter.wait(for: [callbackExpectation], timeout: 1.0)

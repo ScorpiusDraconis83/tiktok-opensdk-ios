@@ -12,7 +12,7 @@ let package = Package(
     name: "TikTokOpenSDK",
     defaultLocalization: "en",
     platforms: [
-        .iOS(.v11)
+        .iOS(.v12)
     ],
     products: [
         .library(
@@ -31,18 +31,21 @@ let package = Package(
     targets: [
         .target(
             name: "TikTokOpenAuthSDK",
-            dependencies: ["TikTokOpenSDKCore"]
+            dependencies: ["TikTokOpenSDKCore"],
+            resources: [.copy("TikTokOpenAuthSDK/Resources/PrivacyInfo.xcprivacy"),]
         ),
         .testTarget(
             name: "TikTokOpenAuthSDKTests",
             dependencies: ["TikTokOpenAuthSDK"]
         ),
         .target(
-            name: "TikTokOpenSDKCore"
+            name: "TikTokOpenSDKCore",
+            resources: [.copy("Resources/PrivacyInfo.xcprivacy"),]
         ),
         .target(
             name: "TikTokOpenShareSDK",
-            dependencies: ["TikTokOpenSDKCore"]
+            dependencies: ["TikTokOpenSDKCore"],
+            resources: [.copy("Resources/PrivacyInfo.xcprivacy"),]
         ),
         .testTarget(
             name: "TikTokOpenShareSDKTests",

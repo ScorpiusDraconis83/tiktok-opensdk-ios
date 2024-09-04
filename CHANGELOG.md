@@ -1,4 +1,23 @@
 # Changelog
+## 2.5.0(os_internal)
+---
+Add support for Xcode 16 beta 3
+Update unit tests
+
+## 2.4.0
+---
+Add Privacy Manifest file for ShareKit and LoginKit
+
+## 2.3.0
+---
+Upgraded minimum iOS support version to 12.0
+### ShareKit
+#### Added
+* Launch app store if TikTok is not installed
+
+### LoginKit
+#### Added
+* Use ASWebAuthenticationSession for web authorization
 
 ## 2.2.0
 ---
